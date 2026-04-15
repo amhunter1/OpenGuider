@@ -29,8 +29,7 @@
     "cross-env": "^10.1.0",
     "electron": "^34.3.0",
     "electron-builder": "^26.8.1",
-    "jsdom": "^27.0.1",
-    "rcedit": "^5.0.2"
+    "jsdom": "^27.0.1"
   },
   "build": {
     "appId": "com.openguider.desktop",
@@ -96,6 +95,7 @@
     }
   },
   "optionalDependencies": {
-    "keytar": "^7.9.0"
+    "keytar": "^7.9.0",
+    "rcedit": "^5.0.2"
   }
 }
