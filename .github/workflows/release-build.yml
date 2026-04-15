@@ -119,4 +119,7 @@ jobs:
             - Windows: OpenGuider-windows-latest.zip
             - macOS: OpenGuider-macos-latest.zip
             - Linux: OpenGuider-linux-latest.zip
-          files: artifacts/**/*
+          files: |
+            artifacts/aliases/OpenGuider-windows-latest.zip
+            artifacts/aliases/OpenGuider-macos-latest.zip
+            artifacts/aliases/OpenGuider-linux-latest.zip
