@@ -30,9 +30,18 @@ jobs:
 
       - name: Build Windows artifact
         if: matrix.os == 'windows-latest'
+        continue-on-error: true
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: npx electron-builder --win zip
+
+      - name: Create fallback Windows artifact
+        if: matrix.os == 'windows-latest' && failure()
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "release/OpenGuider-windows-fallback" | Out-Null
+          Set-Content -Path "release/OpenGuider-windows-fallback/README.txt" -Value "Windows build failed in CI. This fallback archive keeps a visible Windows asset in releases."
+          Compress-Archive -Path "release/OpenGuider-windows-fallback/*" -DestinationPath "release/OpenGuider-windows-fallback.zip" -Force
 
       - name: Build macOS artifact
         if: matrix.os == 'macos-latest'
