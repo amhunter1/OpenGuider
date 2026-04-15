@@ -25,7 +25,7 @@ OpenGuider is an Electron desktop assistant that guides users through UI tasks w
 
 - Landing page: [https://mo-tunn.github.io/OpenGuider/](https://mo-tunn.github.io/OpenGuider/)
 - Latest release: [https://github.com/mo-tunn/OpenGuider/releases/latest](https://github.com/mo-tunn/OpenGuider/releases/latest)
-- Windows installer: [OpenGuider-windows-latest.exe](https://github.com/mo-tunn/OpenGuider/releases/latest/download/OpenGuider-windows-latest.exe)
+- Windows installer: [OpenGuider-windows-latest.zip](https://github.com/mo-tunn/OpenGuider/releases/latest/download/OpenGuider-windows-latest.zip)
 - macOS installer: [OpenGuider-macos-latest.zip](https://github.com/mo-tunn/OpenGuider/releases/latest/download/OpenGuider-macos-latest.zip)
 - Linux installer: [OpenGuider-linux-latest.zip](https://github.com/mo-tunn/OpenGuider/releases/latest/download/OpenGuider-linux-latest.zip)
 
@@ -71,7 +71,7 @@ OpenGuider is an Electron desktop assistant that guides users through UI tasks w
 1. Push a semantic version tag (example: `v0.2.0`).
 2. GitHub Actions runs `.github/workflows/release-build.yml`.
 3. Installers are attached to the release:
-   - `OpenGuider-windows-latest.exe`
+   - `OpenGuider-windows-latest.zip`
    - `OpenGuider-macos-latest.zip`
    - `OpenGuider-linux-latest.zip`
 

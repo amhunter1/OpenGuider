@@ -4,7 +4,7 @@
 
 Landing download buttons are linked to the latest GitHub release assets:
 
-- `OpenGuider-windows-latest.exe`
+- `OpenGuider-windows-latest.zip`
 - `OpenGuider-macos-latest.zip`
 - `OpenGuider-linux-latest.zip`
 
