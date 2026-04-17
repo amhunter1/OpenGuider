@@ -1,6 +1,6 @@
 {
   "name": "openguider",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "OpenGuider AI Companion",
   "author": "Metehan Kızılcık",
   "license": "GPL-3.0-or-later",
@@ -64,8 +64,7 @@
       "sign": false
     },
     "win": {
-      "icon": "renderer/assets/logo.ico",
-      "signAndEditExecutable": true,
+      "signAndEditExecutable": false,
       "target": [
         {
           "target": "nsis",
