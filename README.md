@@ -351,16 +351,16 @@ flowchart LR
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0.  
+This project is licensed under the Apache License 2.0.  
 See [`LICENSE`](./LICENSE) for full terms.
 
 Copyright (C) Metehan Kızılcık
 
-If you create a derivative project, keep these GPLv3 basics:
+If you create a derivative project, keep these Apache 2.0 basics:
 
-1. Include the full GPLv3 license text in a `LICENSE` file.
+1. Include the full Apache 2.0 license text in a `LICENSE` file.
 2. Keep copyright notices (including `Metehan Kızılcık`).
-3. Share source code of distributed modified versions under GPL-compatible terms.
+3. Mark significant modifications clearly in changed files.
 
 ## Acknowledgement
 
