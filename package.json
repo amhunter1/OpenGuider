@@ -1,6 +1,6 @@
 {
   "name": "openguider",
-  "version": "0.1.0",
+  "version": "0.2.6",
   "description": "OpenGuider AI Companion",
   "author": "Metehan Kızılcık",
   "license": "GPL-3.0-or-later",
@@ -12,7 +12,7 @@
     "pack": "electron-builder --dir",
     "dist": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder",
     "dist:win": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win nsis",
-    "dist:mac": "electron-builder --mac dmg zip",
+    "dist:mac": "electron-builder --mac dmg pkg",
     "dist:linux": "electron-builder --linux AppImage deb"
   },
   "dependencies": {
@@ -34,7 +34,7 @@
   "build": {
     "appId": "com.openguider.desktop",
     "productName": "OpenGuider",
-    "icon": "renderer/assets/logo.png",
+    "icon": "renderer/assets/logo.ico",
     "afterPack": "./scripts/after-pack.js",
     "asar": true,
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
@@ -53,11 +53,11 @@
     },
     "npmRebuild": true,
     "mac": {
-      "icon": "renderer/assets/logo.png",
+      "icon": "renderer/assets/logo.ico",
       "category": "public.app-category.productivity",
       "target": [
         "dmg",
-        "zip"
+        "pkg"
       ],
       "hardenedRuntime": false,
       "gatekeeperAssess": false
@@ -66,7 +66,7 @@
       "sign": false
     },
     "win": {
-      "icon": "renderer/assets/logo.png",
+      "icon": "renderer/assets/logo.ico",
       "signAndEditExecutable": false,
       "target": [
         {
@@ -83,7 +83,10 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "runAfterFinish": true
+      "runAfterFinish": true,
+      "installerIcon": "renderer/assets/logo.ico",
+      "uninstallerIcon": "renderer/assets/logo.ico",
+      "installerHeaderIcon": "renderer/assets/logo.ico"
     },
     "linux": {
       "icon": "renderer/assets/logo.png",

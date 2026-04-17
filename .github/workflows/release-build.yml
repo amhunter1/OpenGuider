@@ -28,37 +28,31 @@ jobs:
       - name: Install dependencies
         run: npm ci --omit=optional
 
-      - name: Build Windows artifact
+      - name: Build Windows installer
         if: matrix.os == 'windows-latest'
-        continue-on-error: true
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
-        run: npx electron-builder --win zip
+        run: npx electron-builder --win nsis
 
-      - name: Create fallback Windows artifact
+      - name: Create fallback Windows installer
         if: matrix.os == 'windows-latest' && failure()
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path "release/OpenGuider-windows-fallback" | Out-Null
-          Set-Content -Path "release/OpenGuider-windows-fallback/README.txt" -Value "Windows build failed in CI. This fallback archive keeps a visible Windows asset in releases."
-          Compress-Archive -Path "release/OpenGuider-windows-fallback/*" -DestinationPath "release/OpenGuider-windows-fallback.zip" -Force
+          throw "Windows NSIS installer build failed."
 
-      - name: Build macOS artifact
+      - name: Build macOS installers
         if: matrix.os == 'macos-latest'
-        continue-on-error: true
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
-        run: npx electron-builder --mac zip --config.mac.identity=null
+        run: npx electron-builder --mac dmg pkg --config.mac.identity=null
 
-      - name: Create fallback macOS artifact
+      - name: Create fallback macOS installer
         if: matrix.os == 'macos-latest' && failure()
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p release/OpenGuider-macos-fallback
-          echo "macOS build failed in CI. This fallback archive keeps a visible macOS asset in releases." > release/OpenGuider-macos-fallback/README.txt
-          cd release
-          zip -r OpenGuider-macos-fallback.zip OpenGuider-macos-fallback
+          echo "macOS installer build failed."
+          exit 1
 
       - name: Build Linux artifact
         if: matrix.os == 'ubuntu-latest'
@@ -92,20 +86,23 @@ jobs:
           set -euo pipefail
           mkdir -p artifacts/aliases
 
-          WINDOWS_ZIP="$(find artifacts -type f -name '*win*.zip' | head -n 1)"
-          MACOS_ZIP="$(find artifacts -type f -name '*mac*.zip' | head -n 1)"
+          WINDOWS_SETUP="$(find artifacts -type f -name '*.exe' | head -n 1)"
+          MACOS_DMG="$(find artifacts -type f -name '*.dmg' | head -n 1)"
+          MACOS_PKG="$(find artifacts -type f -name '*.pkg' | head -n 1)"
           LINUX_ZIP="$(find artifacts -type f -name '*linux*.zip' | head -n 1)"
 
-          if [ -z "${WINDOWS_ZIP}" ] || [ -z "${MACOS_ZIP}" ] || [ -z "${LINUX_ZIP}" ]; then
+          if [ -z "${WINDOWS_SETUP}" ] || [ -z "${MACOS_DMG}" ] || [ -z "${MACOS_PKG}" ] || [ -z "${LINUX_ZIP}" ]; then
             echo "Could not locate one or more platform installer files."
-            echo "WINDOWS_ZIP=${WINDOWS_ZIP:-missing}"
-            echo "MACOS_ZIP=${MACOS_ZIP:-missing}"
+            echo "WINDOWS_SETUP=${WINDOWS_SETUP:-missing}"
+            echo "MACOS_DMG=${MACOS_DMG:-missing}"
+            echo "MACOS_PKG=${MACOS_PKG:-missing}"
             echo "LINUX_ZIP=${LINUX_ZIP:-missing}"
             exit 1
           fi
 
-          cp "${WINDOWS_ZIP}" artifacts/aliases/OpenGuider-windows-latest.zip
-          cp "${MACOS_ZIP}" artifacts/aliases/OpenGuider-macos-latest.zip
+          cp "${WINDOWS_SETUP}" artifacts/aliases/OpenGuider-windows-setup-latest.exe
+          cp "${MACOS_DMG}" artifacts/aliases/OpenGuider-macos-installer-latest.dmg
+          cp "${MACOS_PKG}" artifacts/aliases/OpenGuider-macos-package-latest.pkg
           cp "${LINUX_ZIP}" artifacts/aliases/OpenGuider-linux-latest.zip
 
       - name: Publish release with artifacts
@@ -116,10 +113,12 @@ jobs:
             OpenGuider desktop release.
 
             Download installers:
-            - Windows: OpenGuider-windows-latest.zip
-            - macOS: OpenGuider-macos-latest.zip
+            - Windows setup: OpenGuider-windows-setup-latest.exe
+            - macOS installer (DMG): OpenGuider-macos-installer-latest.dmg
+            - macOS package (PKG): OpenGuider-macos-package-latest.pkg
             - Linux: OpenGuider-linux-latest.zip
           files: |
-            artifacts/aliases/OpenGuider-windows-latest.zip
-            artifacts/aliases/OpenGuider-macos-latest.zip
+            artifacts/aliases/OpenGuider-windows-setup-latest.exe
+            artifacts/aliases/OpenGuider-macos-installer-latest.dmg
+            artifacts/aliases/OpenGuider-macos-package-latest.pkg
             artifacts/aliases/OpenGuider-linux-latest.zip
