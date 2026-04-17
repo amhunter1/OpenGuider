@@ -108,7 +108,10 @@ jobs:
           set -euo pipefail
           mkdir -p artifacts/aliases
 
-          WINDOWS_SETUP="$(find artifacts -type f -name '*.exe' | head -n 1)"
+          WINDOWS_SETUP="$(find artifacts -type f -iname '*setup*.exe' | head -n 1)"
+          if [ -z "${WINDOWS_SETUP}" ]; then
+            WINDOWS_SETUP="$(find artifacts -type f -name '*.exe' ! -path '*/win-unpacked/*' ! -name 'OpenGuider.exe' | head -n 1)"
+          fi
           MACOS_DMG="$(find artifacts -type f -name '*.dmg' | head -n 1)"
           MACOS_FALLBACK="$(find artifacts -type f -name '*macos-fallback*.zip' | head -n 1)"
           LINUX_ZIP="$(find artifacts -type f -name '*linux*.zip' | head -n 1)"
