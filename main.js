@@ -1403,6 +1403,10 @@ function setupIPC() {
       const resp = await fetch("https://streaming.assemblyai.com/v3/token?expires_in_seconds=480", {
         headers: { authorization: settings.assemblyaiApiKey },
       });
+      if (!resp.ok) {
+        const errBody = await resp.text().catch(() => "");
+        throw new Error(`AssemblyAI token request failed (${resp.status}): ${errBody || resp.statusText}`);
+      }
       const json = await resp.json();
       return json.token;
     }
