@@ -492,10 +492,17 @@ function getPanelPosition() {
   const defaultX = primaryWorkArea.x + primaryWorkArea.width - PANEL_WIDTH - 20;
   const defaultY = primaryWorkArea.y + 20;
 
-  const savedX = Number(store?.get("panelWindowX", -1));
-  const savedY = Number(store?.get("panelWindowY", -1));
+  const rawX = store?.get("panelWindowX");
+  const rawY = store?.get("panelWindowY");
 
-  if (!Number.isFinite(savedX) || savedX < 0 || !Number.isFinite(savedY) || savedY < 0) {
+  if (rawX === undefined || rawX === null || rawY === undefined || rawY === null) {
+    return { x: defaultX, y: defaultY };
+  }
+
+  const savedX = Number(rawX);
+  const savedY = Number(rawY);
+
+  if (!Number.isFinite(savedX) || !Number.isFinite(savedY)) {
     return { x: defaultX, y: defaultY };
   }
 

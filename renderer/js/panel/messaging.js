@@ -99,6 +99,7 @@ export function createMessagingController({
     const streamingTimeout = window.setTimeout(() => {
       if (state.isStreaming()) {
         log("safety:streaming timeout — force reset after 60s");
+        api.invoke("abort-message");
         state.setStreaming(false);
         dom.sendBtn.disabled = false;
         ui.renderAgentState("idle");

@@ -169,6 +169,7 @@ export function createPanelController({
     dom.textInput.addEventListener("focus", () => {
       if (state.isStreaming()) {
         log("safety:focus reset stuck streaming state");
+        api.invoke("abort-message");
         state.setStreaming(false);
         dom.sendBtn.disabled = false;
         ui.renderAgentState("idle");
