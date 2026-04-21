@@ -140,8 +140,6 @@ currentAbortController = new AbortController();
         ui.showToast("Request timed out", true);
       }
     }, 60000);
-      }
-    }, 60000);
 
     let typingId = null;
     log("ai:send-message start", {
@@ -172,9 +170,9 @@ currentAbortController = new AbortController();
           fastMode: true,
         });
       }
-    } catch (error) {
+} catch (error) {
       onAIError(error.message);
-} finally {
+    } finally {
       if (requestTimeoutId) {
         clearTimeout(requestTimeoutId);
         requestTimeoutId = null;
@@ -182,7 +180,6 @@ currentAbortController = new AbortController();
       if (typingId !== null) {
         ui.removeTypingIndicator(typingId);
       }
-    }
     }
   }
 
