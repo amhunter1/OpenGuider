@@ -461,6 +461,7 @@ export function createPanelUI({ api, doc = document, dom, log, state }) {
 
     let rendered = String(text || "")
       .replace(/\[POINT:[^\]]+\]/gi, "")
+      .replace(/\{[^{}]*"point"\s*:\s*\[\d+,\s*\d+\][^{}]*"label"\s*:\s*"[^"]+"[^{}]*\}/gi, "")
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
